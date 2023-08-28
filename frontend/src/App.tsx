@@ -4,7 +4,7 @@ import axios from "axios";
 
 function App() {
 
-  const [message, setMessage] = useState<string> ();
+  const [message, setMessage] = useState<string> ("");
 
   useEffect(() => {
     axios.get("/api/ceramics")
