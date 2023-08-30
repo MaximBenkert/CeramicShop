@@ -11,5 +11,7 @@ public class CeramicService {
 
     private final CeramicRepository ceramicRepository;
 
-    public List<Ceramic> getAllCeramics () {return ceramicRepository.findAll();}
+    public List<Ceramic> getAllCeramics () {
+        return ceramicRepository.findAll();
+    }
 }
