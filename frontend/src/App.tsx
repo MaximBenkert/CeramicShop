@@ -24,9 +24,7 @@ function App() {
 
 
   return (
-
       <CeramicGallery ceramics={ceramics}/>
-
   );
 }
 
