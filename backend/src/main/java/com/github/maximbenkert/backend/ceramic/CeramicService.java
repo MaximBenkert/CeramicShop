@@ -14,4 +14,8 @@ public class CeramicService {
     public List<Ceramic> getAllCeramics () {
         return ceramicRepository.findAll();
     }
+
+    public Ceramic addCeramic(Ceramic ceramic) {
+        return  ceramicRepository.save(ceramic);
+    }
 }
