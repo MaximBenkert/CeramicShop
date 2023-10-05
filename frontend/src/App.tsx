@@ -11,7 +11,7 @@ const {ceramics, addCeramics} = useCeramics()
 
   return (
       <div>
-          <AddCeramic ceramics={ceramics} addCeramic={addCeramics}/>
+          <AddCeramic addCeramic={addCeramics}/>
           <CeramicGallery ceramics={ceramics}/>
       </div>
   );

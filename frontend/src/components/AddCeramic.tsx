@@ -40,7 +40,6 @@ const Label = styled.label`
 `;
 
 type Props = {
-    ceramics: Ceramic[];
     addCeramic: (newCeramic: Ceramic) => void;
 };
 
