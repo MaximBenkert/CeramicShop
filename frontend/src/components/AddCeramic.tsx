@@ -43,7 +43,7 @@ type Props = {
     addCeramic: (newCeramic: Ceramic) => void;
 };
 
-export default function AddCeramic(props: Props) {
+export default function AddCeramic(props: Readonly<Props>) {
     const [newCeramic, setNewCeramic] = useState<Ceramic>({
         id: "",
         name: "hi",
