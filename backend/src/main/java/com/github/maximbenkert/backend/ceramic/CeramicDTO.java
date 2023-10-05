@@ -2,14 +2,11 @@ package com.github.maximbenkert.backend.ceramic;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 
-@Document("ceramics")
-public record Ceramic(
-        @Id
+public record CeramicDTO(
+
         String id,
         @NotBlank
         @Size(min = 3, max = 32)
@@ -17,6 +14,4 @@ public record Ceramic(
         String description,
         BigDecimal price
 ) {
-
-
 }
