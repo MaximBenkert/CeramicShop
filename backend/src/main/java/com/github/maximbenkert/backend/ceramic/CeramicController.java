@@ -1,5 +1,7 @@
 package com.github.maximbenkert.backend.ceramic;
 
+import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +18,8 @@ public class CeramicController {
     List<Ceramic> getAllCeramics(){return ceramicService.getAllCeramics();}
 
     @PostMapping
-    Ceramic addCeramic(@RequestBody Ceramic ceramic) {
-        return ceramicService.addCeramic(ceramic);
+    Ceramic addCeramic(@RequestBody @Valid CeramicDTO ceramicDTO) {
+        return ceramicService.addCeramic(ceramicDTO);
     }
 
 }

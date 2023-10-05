@@ -42,13 +42,14 @@ class CeramicServiceTest {
     @Test
     void addCeramic_shouldAdd_CeramicToList (){
         //GIVEN
+        CeramicDTO testCeramicDTOWithoutId = new CeramicDTO(null, "Vase", "schöne Vase", new BigDecimal("44.55"));
         Ceramic testCeramicWithoutId = new Ceramic(null, "Vase", "schöne Vase", new BigDecimal("44.55"));
         Ceramic testCeramicWithId = new Ceramic ("111", "Vase", "schöne Vase", new BigDecimal("44.55"));
 
         Mockito.when(ceramicRepositoryMock.save(testCeramicWithoutId))
                 .thenReturn(testCeramicWithId);
         //WHEN
-        Ceramic actual = ceramicService.addCeramic(testCeramicWithoutId);
+        Ceramic actual = ceramicService.addCeramic(testCeramicDTOWithoutId);
 
 
         //THEN

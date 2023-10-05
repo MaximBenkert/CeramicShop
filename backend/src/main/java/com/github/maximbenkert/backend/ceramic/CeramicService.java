@@ -15,7 +15,8 @@ public class CeramicService {
         return ceramicRepository.findAll();
     }
 
-    public Ceramic addCeramic(Ceramic ceramic) {
+    public Ceramic addCeramic(CeramicDTO ceramicDTO) {
+        Ceramic ceramic = new Ceramic(null, ceramicDTO.name(), ceramicDTO.description(), ceramicDTO.price());
         return  ceramicRepository.save(ceramic);
     }
 }
