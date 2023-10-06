@@ -1,18 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Ceramic} from '../models/Ceramic';
-import {useNavigate} from "react-router-dom";
+import { Ceramic } from '../models/Ceramic';
+import { useNavigate } from 'react-router-dom';
 
-// Stilisierte Komponenten erstellen
 const CardContainer = styled.div`
-  border: 1px solid #ccc;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
   padding: 16px;
   margin: 16px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: calc(33.33vw - 32px); // Breite auf etwa 1/3 der Viewport-Breite setzen
+  width: 100%;
+  max-width: 300px;
   box-sizing: border-box;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
 `;
 
 const CeramicName = styled.div`
@@ -28,21 +35,40 @@ const CeramicDescription = styled.div`
 
 const CeramicPrice = styled.div`
   font-weight: bold;
+  font-size: 16px;
+  color: #007bff;
+  margin-top: auto;
+`;
+
+const DetailsButton = styled.button`
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
 `;
 
 export type CardProps = {
-    ceramic: Ceramic
-}
+    ceramic: Ceramic;
+};
 
 export default function CeramicCard(props: CardProps) {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
         <CardContainer>
             <CeramicName>{props.ceramic.name}</CeramicName>
             <CeramicDescription>{props.ceramic.description}</CeramicDescription>
             <CeramicPrice>${props.ceramic.price}</CeramicPrice>
-            <button onClick={() => navigate(`/details/${props.ceramic.id}`)}>Details</button>
+            <DetailsButton onClick={() => navigate(`/details/${props.ceramic.id}`)}>
+                Details
+            </DetailsButton>
         </CardContainer>
-    )
+    );
 }
