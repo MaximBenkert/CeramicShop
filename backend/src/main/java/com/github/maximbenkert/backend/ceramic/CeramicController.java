@@ -15,13 +15,19 @@ public class CeramicController {
     private final CeramicService ceramicService;
 
     @GetMapping
-    List<Ceramic> getAllCeramics(){return ceramicService.getAllCeramics();}
+    List<Ceramic> getAllCeramics() {
+        return ceramicService.getAllCeramics();
+    }
 
     @PostMapping
     Ceramic addCeramic(@RequestBody @Valid CeramicDTO ceramicDTO) {
         return ceramicService.addCeramic(ceramicDTO);
     }
 
+    @GetMapping("/{id}")
+    Ceramic getCeramicById(@PathVariable String id) {
+        return ceramicService.getCeramicById(id);
+    }
 }
 
 

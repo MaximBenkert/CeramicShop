@@ -1,42 +1,60 @@
-import { Ceramic } from "../models/Ceramic";
-import { FormEvent, useState } from "react";
-import styled from "styled-components";
+import React, { useState, FormEvent } from 'react';
+import styled from 'styled-components';
+import { Ceramic } from '../models/Ceramic';
 
 const Container = styled.div`
-  background-color: #9cbac6;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 30vh;
+  min-height: 60vh;
+  background-color: #f5f5f5;
 `;
 
-const Form = styled.form`
-  color: #6699cc;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  padding: 20px;
+const FormContainer = styled.div`
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  padding: 24px;
+  width: 400px;
+  text-align: center;
 `;
 
-const MyButton = styled.button`
-  background-color: inherit;
-  border: none;
-  padding: 10px 20px;
-  color: inherit;
-  cursor: pointer;
+const Title = styled.h2`
+  color: #333;
+  margin-bottom: 24px;
 `;
 
 const InputGroup = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 const Label = styled.label`
-  margin-bottom: 5px;
+  color: #666;
+  margin-bottom: 8px;
+`;
+
+const Input = styled.input`
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+`;
+
+const Button = styled.button`
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
 `;
 
 type Props = {
@@ -45,16 +63,16 @@ type Props = {
 
 export default function AddCeramic(props: Readonly<Props>) {
     const [newCeramic, setNewCeramic] = useState<Ceramic>({
-        id: "",
-        name: "hi",
-        description: "",
+        id: '',
+        name: '',
+        description: '',
         price: 0.0,
     });
 
     function onSaveCeramic(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        if (newCeramic.name === undefined || newCeramic.name === "") {
-            console.error("name required");
+        if (!newCeramic.name) {
+            console.error('Name is required');
             return;
         }
         props.addCeramic(newCeramic);
@@ -62,47 +80,50 @@ export default function AddCeramic(props: Readonly<Props>) {
 
     return (
         <Container>
-            <Form onSubmit={onSaveCeramic}>
-                <InputGroup>
-                    <Label>Name</Label>
-                    <input
-                        type="text"
-                        required
-                        value={newCeramic.name}
-                        onChange={(event) =>
-                            setNewCeramic({ ...newCeramic, name: event.target.value })
-                        }
-                    />
-                </InputGroup>
-                <InputGroup>
-                    <Label>Beschreibung</Label>
-                    <input
-                        type="text"
-                        required
-                        value={newCeramic.description}
-                        onChange={(event) =>
-                            setNewCeramic({
-                                ...newCeramic,
-                                description: event.target.value,
-                            })
-                        }
-                    />
-                </InputGroup>
-                <InputGroup>
-                    <Label>Preis</Label>
-                    <input
-                        type="number"
-                        value={newCeramic.price}
-                        onChange={(event) =>
-                            setNewCeramic({
-                                ...newCeramic,
-                                price: parseFloat(event.target.value),
-                            })
-                        }
-                    />
-                </InputGroup>
-                <MyButton type="submit">Save</MyButton>
-            </Form>
+            <FormContainer>
+                <Title>Add a New Ceramic</Title>
+                <form onSubmit={onSaveCeramic}>
+                    <InputGroup>
+                        <Label>Name</Label>
+                        <Input
+                            type="text"
+                            required
+                            value={newCeramic.name}
+                            onChange={(event) =>
+                                setNewCeramic({ ...newCeramic, name: event.target.value })
+                            }
+                        />
+                    </InputGroup>
+                    <InputGroup>
+                        <Label>Description</Label>
+                        <Input
+                            type="text"
+                            required
+                            value={newCeramic.description}
+                            onChange={(event) =>
+                                setNewCeramic({
+                                    ...newCeramic,
+                                    description: event.target.value,
+                                })
+                            }
+                        />
+                    </InputGroup>
+                    <InputGroup>
+                        <Label>Price</Label>
+                        <Input
+                            type="number"
+                            value={newCeramic.price}
+                            onChange={(event) =>
+                                setNewCeramic({
+                                    ...newCeramic,
+                                    price: parseFloat(event.target.value),
+                                })
+                            }
+                        />
+                    </InputGroup>
+                    <Button type="submit">Save</Button>
+                </form>
+            </FormContainer>
         </Container>
     );
 }
