@@ -73,4 +73,15 @@ class CeramicIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(testCeramicJson));
    }
+
+   @Test
+    void getCeramicById_shouldReturnApiErrorAndStatusIsNotFound_whenInvalidId() throws Exception {
+        String invalidId = "1234";
+        String expectedBody = "{ \"message\": \"Ceramic with Id " + invalidId + " not found!\"}";
+
+        mockMvc.perform(get("/api/ceramics/" + invalidId))
+                .andExpect(status().isNotFound())
+                .andExpect(content().json(expectedBody));
+   }
 }
+
