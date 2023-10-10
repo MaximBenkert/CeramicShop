@@ -28,6 +28,13 @@ public class CeramicController {
     Ceramic getCeramicById(@PathVariable String id) {
         return ceramicService.getCeramicById(id);
     }
+    @DeleteMapping("/{id}")
+    void deleteCeramic (@PathVariable String id) {
+        if (id.isBlank()) {
+            throw new IllegalArgumentException("Id is empty");
+        }
+        ceramicService.deleteCeramic(id);
+    }
 }
 
 

@@ -26,4 +26,11 @@ public class CeramicService {
         return ceramicRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException(errorMessage));
     }
+
+    public void deleteCeramic(String id) {
+        if (ceramicRepository.existsById(id)) {
+            ceramicRepository.deleteById(id);
+        } else throw new NoSuchElementException("Couldn't delete ceramic. Id " + id + " does not exist");
+
+    }
 }
