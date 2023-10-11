@@ -17,17 +17,17 @@ class CeramicServiceTest {
 
     CeramicService ceramicService;
     CeramicRepository ceramicRepositoryMock;
-    List<Ceramic> mockCeramics;String testIdOne = "1234";
+    List<Ceramic> mockCeramics;
+    String notExistingTestId = "1234";
     @BeforeEach
     public void setUp () {
         ceramicRepositoryMock = Mockito.mock(CeramicRepository.class);
+        ceramicService = new CeramicService(ceramicRepositoryMock);
 
         Ceramic testCeramic1 = new Ceramic("1", "Vase", "Handgemachte Vase", new BigDecimal("42.99"));
         Ceramic testCeramic2 = new Ceramic("2", "Teller", "Schöner Teller", new BigDecimal("19.99"));
 
         mockCeramics = Arrays.asList(testCeramic1, testCeramic2);
-
-        ceramicService = new CeramicService(ceramicRepositoryMock);
     }
 
     @Test
@@ -53,40 +53,53 @@ class CeramicServiceTest {
         //WHEN
         Ceramic actual = ceramicService.addCeramic(testCeramicDTOWithoutId);
 
-
         //THEN
         verify(ceramicRepositoryMock).save(testCeramicWithoutId);
         assertEquals(testCeramicWithId, actual);
-        assertEquals("111", actual.id());
+        assertEquals(testCeramicWithId.id(), actual.id());
     }
 
     @Test
     void getCeramicById_shouldReturnCeramicById (){
         //GIVEN
-        String idTestCeramic1 = "1";
-        Ceramic testCeramic1 = new Ceramic("1", "Vase", "Handgemachte Vase", new BigDecimal("42.99"));
-        Mockito.when(ceramicRepositoryMock.findById(idTestCeramic1)).thenReturn(Optional.of(testCeramic1));
-
+        Mockito.when(ceramicRepositoryMock.findById(mockCeramics.get(0).id()))
+                .thenReturn(Optional.of(mockCeramics.get(0)));
         //WHEN
-        Ceramic actual = ceramicService.getCeramicById(idTestCeramic1);
+        Ceramic actual = ceramicService.getCeramicById(mockCeramics.get(0).id());
 
         //THEN
-        verify(ceramicRepositoryMock).findById(idTestCeramic1);
-        assertEquals(actual, testCeramic1);
+        verify(ceramicRepositoryMock).findById(mockCeramics.get(0).id());
+        assertEquals(actual, mockCeramics.get(0));
     }
 
     @Test
     void getCeramicById_shouldThrowException_whenInvalidId () {
-        String errorMessage = "Ceramic with Id " + testIdOne + " not found!";
+        //GIVEN
+        String errorMessage = "Ceramic with Id " + notExistingTestId + " not found!";
 
-        Mockito.when(ceramicRepositoryMock.findById(testIdOne))
+        Mockito.when(ceramicRepositoryMock.findById(notExistingTestId))
                 .thenThrow(new NoSuchElementException(errorMessage));
 
+        //WHEN
         Exception exception = assertThrows(NoSuchElementException.class,
-                () -> ceramicService.getCeramicById(testIdOne));
-
-        verify(ceramicRepositoryMock).findById(testIdOne);
+                () -> ceramicService.getCeramicById(notExistingTestId));
+        //THEN
+        verify(ceramicRepositoryMock).findById(notExistingTestId);
         assertEquals(errorMessage, exception.getMessage());
+    }
+
+    @Test
+    void deleteCeramic_shouldDeleteCeramic () {
+        //GIVEN
+        Mockito.when(ceramicRepositoryMock.existsById(mockCeramics.get(0).id()))
+                .thenReturn(true);
+
+        //WHEN
+        ceramicService.deleteCeramic(mockCeramics.get(0).id());
+
+        //THEN
+        verify(ceramicRepositoryMock).existsById(mockCeramics.get(0).id());
+        verify(ceramicRepositoryMock).deleteById(mockCeramics.get(0).id());
     }
 
 }
